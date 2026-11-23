@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Participant Portal — VSPARK 2025</title>
+  <meta name="description" content="VSPARK participant portal: check your registration status, start your competition timer and submit your video link." />
+  <meta name="robots" content="noindex" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ── Header ───────────────────────────────────────────── -->
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <a class="brand" href="/"><b>V</b>SPARK</a>
+      <nav class="topbar-nav">
+        <button class="btn btn--ghost btn--sm" id="logoutBtn" hidden>Log out</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ── Login screen ─────────────────────────────────────── -->
+  <main class="wrap wrap--narrow" id="loginView">
+    <div style="padding: 72px 0 48px;">
+      <div class="card">
+        <h1 style="font-size:1.5rem; margin:0 0 6px;">Participant Portal</h1>
+        <p class="muted">Log in with your Registration ID and your registration number.</p>
+
+        <form id="loginForm" novalidate style="margin-top:20px;">
+          <div class="field">
+            <label for="loginId">Registration ID *</label>
+            <input id="loginId" type="text" placeholder="VS-0001" autocomplete="off" style="text-transform:uppercase;" required />
+          </div>
+          <div class="field">
+            <label for="loginRegNo">Your registration number *</label>
+            <input id="loginRegNo" type="text" placeholder="FA23-BSE-062" autocomplete="off" style="text-transform:uppercase;" required />
+          </div>
+          <p class="form-error" id="loginError" role="alert" hidden></p>
+          <button class="btn btn--full" type="submit" id="loginSubmit">Log In</button>
+        </form>
+
+        <p class="muted" style="font-size:.82rem; margin-top:16px; text-align:center;">
+          Don't have a Registration ID? <a href="/register">Register your team →</a>
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <!-- ── Portal (authenticated) ─────────────────────────────── -->
+  <main class="wrap wrap--narrow portal-wrap" id="portalView" hidden>
+
+    <!-- Status: pending -->
+    <div id="screenPending" hidden>
+      <div class="card status-pending">
+        <h1 style="font-size:1.5rem; margin:0 0 8px;">Registration Under Review</h1>
+        <p class="muted">Your registration is pending organizer approval. Check back later or wait for an email notification.</p>
+      </div>
+      <div class="card" id="pendingTeamInfo" style="margin-top:20px;"></div>
+    </div>
+
+    <!-- Status: rejected -->
+    <div id="screenRejected" hidden>
+      <div class="card status-rejected">
+        <h1 style="font-size:1.5rem; margin:0 0 8px; color:var(--danger);">Registration Not Approved</h1>
+        <p class="muted">Unfortunately your registration could not be accepted at this time.</p>
+        <p id="rejectReasonText" style="margin-top:8px;" hidden></p>
+        <p class="muted" style="font-size:.88rem;">Please contact the organizers if you have questions.</p>
+      </div>
+    </div>
+
+    <!-- Status: accepted -->
+    <div id="screenAccepted" hidden>
+      <!-- Team info & venue -->
+      <div class="card status-accepted" id="acceptedInfo">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:12px;">
+          <div>
+            <span class="badge badge--ok" style="margin:0 0 8px; display:inline-block;">✓ Accepted</span>
+            <h1 style="font-size:1.5rem; margin:0 0 4px;" id="acceptedTeamName"></h1>
+            <div id="acceptedMembers" class="muted" style="font-size:.88rem;"></div>
+            <p class="muted" id="acceptedRegId" style="font-size:.82rem; margin:8px 0 0;"></p>
+          </div>
+          <div id="venueBlock" hidden style="text-align:right;">
+            <div class="muted" style="font-size:.78rem; text-transform:uppercase; letter-spacing:.06em;">Venue</div>
+            <div id="venueName" style="font-weight:700; color:var(--blue-light); margin-top:2px;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Own result (if published) -->
+      <div class="card" id="resultCard" hidden style="margin-top:16px;">
+        <h2 style="font-size:1.1rem; margin:0 0 8px;" id="resultHeading"></h2>
+        <p class="muted" id="resultText"></p>
+      </div>
+
+      <!-- Competition section -->
+      <div style="margin-top:20px;" id="competitionSection">
+
+        <!-- Gate closed, not started -->
+        <div class="card" id="screenGateClosed" hidden>
+          <h2 style="font-size:1.1rem; margin:0 0 8px;">Competition Not Open Yet</h2>
+          <p class="muted">The organizers haven't opened the competition gate. This page will refresh automatically.</p>
+        </div>
+
+        <!-- Gate open, not started -->
+        <div class="card" id="screenReadyToStart" hidden>
+          <h2 style="font-size:1.1rem; margin:0 0 12px;">Ready to Compete!</h2>
+          <p class="muted" style="margin-bottom:16px;">Click the button to start your personal 20-minute window. <strong>The timer starts immediately and cannot be paused.</strong> Make sure you're ready.</p>
+          <div style="background:rgba(251,191,36,.08); border:1px solid rgba(251,191,36,.2); border-radius:8px; padding:12px 16px; margin-bottom:20px; font-size:.88rem;">
+            ⚠️ Starting is irreversible. Only click when you are seated at your workstation with tools ready.
+          </div>
+          <button class="btn btn--full" id="startBtn">Start My 20 Minutes →</button>
+        </div>
+
+        <!-- Timer running -->
+        <div id="screenRunning" hidden>
+          <!-- Countdown -->
+          <div class="countdown-box">
+            <div class="countdown-label">Time Remaining</div>
+            <div class="countdown-time" id="countdown">20:00</div>
+            <div class="muted" style="font-size:.8rem; margin-top:8px;">Ends at <span id="endsAtDisplay"></span></div>
+          </div>
+
+          <!-- Admin Drive link -->
+          <div class="card" id="driveLinkCard" hidden style="margin-bottom:16px;">
+            <h2 style="font-size:1rem; margin:0 0 8px;">📁 Scenario &amp; Instructions</h2>
+            <p class="muted" style="font-size:.88rem; margin-bottom:12px;">Open the shared folder to view your scenario, reference materials and submission instructions.</p>
+            <a id="adminDriveLink" href="#" target="_blank" rel="noopener" class="btn btn--sm">Open Drive Folder ↗</a>
+          </div>
+
+          <!-- Submission form -->
+          <div class="card">
+            <h2 style="font-size:1rem; margin:0 0 8px;">Submit Your Video Link</h2>
+            <p class="muted" style="font-size:.88rem; margin-bottom:16px;">Paste the Google Drive link to your folder containing the video and prompts. You can update it until time is up — the last submitted link counts.</p>
+            <form id="submitForm" novalidate>
+              <div class="field">
+                <label for="submissionLink">Your Google Drive link *</label>
+                <input id="submissionLink" type="url" placeholder="https://drive.google.com/…" required />
+                <small class="error" id="submitLinkError"></small>
+              </div>
+              <button type="submit" class="btn btn--full" id="submitLinkBtn">Submit Link</button>
+            </form>
+            <div class="sub-status" id="submitStatus" hidden></div>
+          </div>
+        </div>
+
+        <!-- Time over -->
+        <div id="screenTimeOver" hidden>
+          <div class="countdown-box" style="border-color:var(--danger); background:rgba(248,113,113,.05);">
+            <div class="countdown-label" style="color:var(--danger)">Time Over</div>
+            <div class="countdown-time done">00:00</div>
+          </div>
+          <div class="card" style="margin-top:16px;">
+            <h2 style="font-size:1.1rem; margin:0 0 8px;">Submissions Closed</h2>
+            <p class="muted">Your 20-minute window has ended.</p>
+            <div id="finalSubmissionView" style="margin-top:12px;"></div>
+          </div>
+        </div>
+
+      </div><!-- /competitionSection -->
+    </div><!-- /screenAccepted -->
+
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">VSPARK 2025 · COMSATS University Islamabad, Vehari Campus</div>
+  </footer>
+
+  <script src="portal.js"></script>
+</body>
+</html>

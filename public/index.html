@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>VSPARK 2025 — Prompt Engineering Competition | AI Video Generation Challenge</title>
+  <meta name="description" content="VSPARK Prompt Engineering Competition: AI Video Generation Challenge at COMSATS University Islamabad, Vehari Campus. Register your team today." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ── Header ───────────────────────────────────────────── -->
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <a class="brand" href="/"><b>V</b>SPARK</a>
+      <nav class="topbar-nav">
+        <a class="btn btn--ghost btn--sm" href="/register">Register</a>
+        <a class="btn btn--ghost btn--sm" href="/portal">My Portal</a>
+        <a class="btn btn--ghost btn--sm" href="/admin">Admin</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ── Hero ─────────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="wrap">
+      <p class="hero-meta">Registrations Open</p>
+      <h1>Prompt Engineering<br/>Competition</h1>
+      <p class="hero-event">AI Video Generation Challenge &nbsp;·&nbsp; COMSATS University Islamabad, Vehari Campus</p>
+      <p class="hero-sub">
+        Your team has 20 minutes to craft prompts, generate an original AI video,
+        and submit a Google Drive link containing your video and prompt. The best
+        storytelling, creativity and prompt engineering wins.
+      </p>
+
+      <div class="hero-actions">
+        <a id="registerBtn" class="btn" href="/register">Register Now →</a>
+        <a class="btn btn--ghost" href="/portal">Participant Portal</a>
+      </div>
+
+      <ul class="facts">
+        <li><strong>20 min</strong><span>Per team</span></li>
+        <li><strong>1 – 2</strong><span>Team size</span></li>
+        <li><strong>PKR 1,000</strong><span>Registration fee</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ── Winners section (shown only after publish) ──────── -->
+  <section class="section" id="winnersSection" hidden>
+    <div class="wrap">
+      <h2 class="section-title">🏆 Competition Results</h2>
+      <p class="section-sub">Congratulations to all participants!</p>
+      <div class="podium" id="podium">
+        <!-- Filled by winners.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ── About the competition ────────────────────────────── -->
+  <section class="section" style="background: var(--surface); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);">
+    <div class="wrap">
+      <h2 class="section-title">About the Competition</h2>
+      <p class="section-sub">What is VSPARK and what can you expect?</p>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+        <div class="card">
+          <h3>What to Expect</h3>
+          <p>Each accepted team receives a dedicated 20-minute competition window on the day. You will see a scenario and instructions. Generate an original AI video and submit a Google Drive link containing your video and the prompts you used.</p>
+          <p>Judges will evaluate prompt engineering quality, scenario accuracy, visual storytelling and creativity. Their decision is final.</p>
+        </div>
+        <div class="card">
+          <h3>Rules</h3>
+          <ul class="rules">
+            <li>Bring your own laptop, tool accounts and credits.</li>
+            <li>Runway, Kling, Pika, Sora, CapCut, Flow and similar tools are allowed.</li>
+            <li>AI assistants like ChatGPT, Gemini and Claude may help with prompts.</li>
+            <li>Videos must be created during the 20 minutes. Pre-made videos are not accepted.</li>
+            <li>Don't copy another team's prompts or fabricate generation evidence.</li>
+            <li>Judges may inspect your prompts. Their decision is final.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── How it works ─────────────────────────────────────── -->
+  <section class="section">
+    <div class="wrap">
+      <h2 class="section-title">How It Works</h2>
+      <p class="section-sub">From registration to competition day in four simple steps.</p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+        <div class="card" style="text-align:center">
+          <div style="font-size:2rem;margin-bottom:12px;">📝</div>
+          <h3>1. Register</h3>
+          <p class="muted" style="font-size:.88rem">Fill the form, pay PKR 1,000 and upload your receipt.</p>
+        </div>
+        <div class="card" style="text-align:center">
+          <div style="font-size:2rem;margin-bottom:12px;">✅</div>
+          <h3>2. Get Approved</h3>
+          <p class="muted" style="font-size:.88rem">Organizers verify your payment and approve your team.</p>
+        </div>
+        <div class="card" style="text-align:center">
+          <div style="font-size:2rem;margin-bottom:12px;">⏱️</div>
+          <h3>3. Start Your Timer</h3>
+          <p class="muted" style="font-size:.88rem">On competition day, log in to your portal and start your 20-minute window.</p>
+        </div>
+        <div class="card" style="text-align:center">
+          <div style="font-size:2rem;margin-bottom:12px;">🎬</div>
+          <h3>4. Submit & Win</h3>
+          <p class="muted" style="font-size:.88rem">Upload your video and prompts to Google Drive and paste the link before time runs out.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA ──────────────────────────────────────────────── -->
+  <section class="section" style="text-align:center; background: linear-gradient(160deg, #0d1a35, var(--bg));">
+    <div class="wrap">
+      <h2 class="section-title">Ready to Compete?</h2>
+      <p class="muted" style="margin-bottom:28px;">Registration is open. Secure your spot before seats fill up.</p>
+      <a class="btn" href="/register" style="font-size:1.1rem; padding: 15px 40px;">Register Your Team →</a>
+    </div>
+  </section>
+
+  <!-- ── Footer ───────────────────────────────────────────── -->
+  <footer class="footer">
+    <div class="wrap">
+      VSPARK 2025 &nbsp;·&nbsp; COMSATS University Islamabad, Vehari Campus &nbsp;·&nbsp;
+      <a href="/admin" style="color:var(--muted);font-size:.82rem">Admin</a>
+    </div>
+  </footer>
+
+  <script>
+    // Load winners section if results are published.
+    (async () => {
+      try {
+        const res  = await fetch("/api/public/winners");
+        const data = await res.json();
+        if (!data.published) return;
+
+        const medals = ["🥇", "🥈", "🥉"];
+        const positions = ["first", "second", "third"];
+        const classes   = ["first", "second", "third"];
+        const labels    = ["1st Place", "2nd Place", "3rd Place"];
+
+        const podium = document.getElementById("podium");
+        podium.innerHTML = positions.map((pos, i) => {
+          const team = data[pos];
+          if (!team) return "";
+          const memberNames = team.members.map(m => m.name).join(" &amp; ");
+          return `
+            <div class="podium-card ${classes[i]}">
+              <span class="podium-medal">${medals[i]}</span>
+              <div class="podium-pos">${labels[i]}</div>
+              <div class="podium-team">${esc(team.teamName)}</div>
+              <div class="podium-members">${esc(memberNames)}</div>
+            </div>`;
+        }).join("");
+
+        document.getElementById("winnersSection").hidden = false;
+      } catch { /* Results not available yet — fail silently */ }
+    })();
+
+    function esc(s) {
+      return String(s ?? "").replace(/[&<>"']/g, c =>
+        ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "routes": [
+    { "src": "/api/(.*)", "dest": "/server.js" },
+    { "src": "/admin",    "dest": "/public/admin.html" },
+    { "src": "/register", "dest": "/public/register.html" },
+    { "src": "/portal",   "dest": "/public/portal.html" },
+    { "src": "/(.*)",     "dest": "/public/$1" }
+  ]
+}

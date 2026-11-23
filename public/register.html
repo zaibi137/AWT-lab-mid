@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Register — VSPARK 2025 | AI Video Generation Challenge</title>
+  <meta name="description" content="Register your team for the VSPARK Prompt Engineering Competition at COMSATS University Islamabad, Vehari Campus." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ── Header ───────────────────────────────────────────── -->
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <a class="brand" href="/"><b>V</b>SPARK</a>
+      <nav class="topbar-nav">
+        <a class="btn btn--ghost btn--sm" href="/portal">My Portal</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ── Page intro ────────────────────────────────────────── -->
+  <section class="hero" style="padding: 48px 0 32px;">
+    <div class="wrap">
+      <p class="hero-meta">VSPARK · Prompt Engineering Competition</p>
+      <h1 style="font-size: clamp(1.6rem,4vw,2.4rem);">Register Your Team</h1>
+      <p class="hero-sub">Prompt Engineering Competition — AI Video Generation Challenge.<br/>
+         COMSATS University Islamabad, Vehari Campus.</p>
+    </div>
+  </section>
+
+  <!-- ── Main layout ───────────────────────────────────────── -->
+  <main>
+    <div class="wrap layout">
+
+      <!-- Registration form card -->
+      <section class="card" id="registerSection" aria-labelledby="form-title">
+        <h2 id="form-title">Team Registration</h2>
+        <p class="muted" id="formIntro">Solo or with one teammate. Fields marked * are required.</p>
+
+        <form id="form" novalidate>
+
+          <!-- Team -->
+          <fieldset>
+            <legend>Team</legend>
+            <div class="field">
+              <label for="teamName">Team name <span class="muted" style="font-weight:400">(optional)</span></label>
+              <input id="teamName" name="teamName" type="text" maxlength="40" placeholder="e.g. PromptMasters" />
+              <small class="error" data-for="teamName"></small>
+            </div>
+          </fieldset>
+
+          <!-- Member 1 -->
+          <fieldset>
+            <legend>Member 1 (you)</legend>
+            <div class="row">
+              <div class="field">
+                <label for="member1Name">Full name *</label>
+                <input id="member1Name" name="member1Name" type="text" autocomplete="name" required />
+                <small class="error" data-for="member1Name"></small>
+              </div>
+              <div class="field">
+                <label for="member1RegNo">Registration no. *</label>
+                <input id="member1RegNo" name="member1RegNo" type="text" placeholder="FA23-BSE-062" maxlength="20" data-regno required />
+                <small class="error" data-for="member1RegNo"></small>
+              </div>
+            </div>
+            <div class="row">
+              <div class="field">
+                <label>Institute *</label>
+                <div class="institute-badge" id="instituteBadge1">
+                  <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                  COMSATS University Islamabad, Vehari Campus
+                </div>
+              </div>
+              <div class="field">
+                <label for="member1Program">Degree program *</label>
+                <select id="member1Program" name="member1Program" required>
+                  <option value="">Choose program</option>
+                </select>
+                <small class="error" data-for="member1Program"></small>
+              </div>
+            </div>
+            <div class="row">
+              <div class="field">
+                <label for="email">Email address *</label>
+                <input id="email" name="email" type="email" autocomplete="email" required />
+                <small class="error" data-for="email"></small>
+              </div>
+              <div class="field">
+                <label for="phone">Mobile number *</label>
+                <input id="phone" name="phone" type="tel" inputmode="numeric" placeholder="03001234567" maxlength="11" required />
+                <small class="error" data-for="phone"></small>
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- Member 2 (optional) -->
+          <fieldset>
+            <legend>Member 2 <span class="muted" style="font-weight:400">(optional)</span></legend>
+            <div class="row">
+              <div class="field">
+                <label for="member2Name">Full name</label>
+                <input id="member2Name" name="member2Name" type="text" />
+                <small class="error" data-for="member2Name"></small>
+              </div>
+              <div class="field">
+                <label for="member2RegNo">Registration no.</label>
+                <input id="member2RegNo" name="member2RegNo" type="text" placeholder="SP24-BCS-015" maxlength="20" data-regno />
+                <small class="error" data-for="member2RegNo"></small>
+              </div>
+            </div>
+            <div class="row">
+              <div class="field">
+                <label>Institute</label>
+                <div class="institute-badge">
+                  <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                  COMSATS University Islamabad, Vehari Campus
+                </div>
+              </div>
+              <div class="field">
+                <label for="member2Program">Degree program</label>
+                <select id="member2Program" name="member2Program">
+                  <option value="">Choose program</option>
+                </select>
+                <small class="error" data-for="member2Program"></small>
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- Payment -->
+          <fieldset>
+            <legend>Payment of PKR 1,000</legend>
+            <div class="row">
+              <div class="field">
+                <label for="paymentMethod">Paid via *</label>
+                <select id="paymentMethod" name="paymentMethod" required>
+                  <option value="">Choose method</option>
+                  <option>Easypaisa</option>
+                  <option>JazzCash</option>
+                  <option>Bank transfer</option>
+                </select>
+                <small class="error" data-for="paymentMethod"></small>
+              </div>
+              <div class="field">
+                <label for="transactionId">Transaction ID *</label>
+                <input id="transactionId" name="transactionId" type="text" required />
+                <small class="error" data-for="transactionId"></small>
+              </div>
+            </div>
+            <!-- Receipt upload -->
+            <div class="field">
+              <label for="receipt">Payment receipt * <span class="muted" style="font-weight:400">(JPG, PNG or PDF, max 2 MB)</span></label>
+              <label class="upload-area" id="uploadArea" for="receipt">
+                <div id="uploadPrompt">
+                  <div style="font-size:2rem; margin-bottom:8px;">📎</div>
+                  <div>Click to choose file <span class="muted">or drag &amp; drop</span></div>
+                  <div class="muted" style="font-size:.82rem; margin-top:4px;">JPG · PNG · PDF · max 2 MB</div>
+                </div>
+                <div class="upload-preview" id="uploadPreview" hidden></div>
+                <input id="receipt" name="receipt" type="file" accept=".jpg,.jpeg,.png,.pdf,image/jpeg,image/png,application/pdf" required />
+              </label>
+              <small class="error" data-for="receipt"></small>
+            </div>
+          </fieldset>
+
+          <p class="form-error" id="formError" role="alert" hidden></p>
+          <button type="submit" class="btn btn--full" id="submitBtn" style="margin-top:20px">Submit Registration</button>
+        </form>
+
+        <!-- Success state -->
+        <div class="success-box" id="success" hidden tabindex="-1">
+          <h2>Registration Submitted</h2>
+          <p>Save this Registration ID. The participant portal asks for it when you log in.</p>
+          <div class="reg-id" id="regId"></div>
+          <button type="button" class="btn btn--ghost btn--sm" id="copyIdBtn">Copy Registration ID</button>
+          <p id="copyIdMsg" class="muted" style="font-size:.88rem; margin-top:8px;" hidden>Copied. Keep it somewhere safe.</p>
+          <p class="muted" style="font-size:.88rem; margin-top:16px;">Registration is pending organizer approval. Use this ID with either member's registration number to check your status.</p>
+          <a id="portalLink" href="/portal" class="btn" style="display:inline-block; margin-top:16px;">Go to Participant Portal</a>
+        </div>
+      </section>
+
+      <!-- Sidebar -->
+      <aside class="side">
+        <div class="card">
+          <h3>Key Details</h3>
+          <p><strong>Venue:</strong> COMSATS University Islamabad, Vehari Campus</p>
+          <p><strong>Fee:</strong> PKR 1,000 per team</p>
+          <p><strong>Team:</strong> 1 or 2 members</p>
+          <p><strong>Format:</strong> 20-minute window per team on competition day</p>
+        </div>
+        <div class="card">
+          <h3>Payment Details</h3>
+          <p class="muted">Pay PKR 1,000 via Easypaisa, JazzCash or bank transfer to the organizer's account, then upload a screenshot/PDF of the receipt.</p>
+          <p class="muted" style="font-size:.88rem;">Contact the organizers for payment account details.</p>
+        </div>
+        <div class="card">
+          <h3>Rules</h3>
+          <ul class="rules">
+            <li>Bring your own laptop, tool accounts and credits.</li>
+            <li>Runway, Kling, Pika, Sora, CapCut, Flow and similar tools are allowed.</li>
+            <li>AI assistants like ChatGPT, Gemini and Claude may help with prompts.</li>
+            <li>Videos must be created during the 20 minutes. Pre-made videos are not accepted.</li>
+            <li>Don't copy another team's prompts or fabricate generation evidence.</li>
+            <li>Judges may inspect your prompts. Their decision is final.</li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">VSPARK 2025 · COMSATS University Islamabad, Vehari Campus</div>
+  </footer>
+
+  <script src="register.js"></script>
+</body>
+</html>

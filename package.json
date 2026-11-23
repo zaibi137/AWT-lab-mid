@@ -1,0 +1,17 @@
+{
+  "name": "vspark-portal",
+  "version": "2.0.0",
+  "description": "VSPARK Prompt Engineering Competition portal – registration, admin, participant portal, competition timer, results.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node -r dotenv/config server.js",
+    "dev": "node -r dotenv/config server.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mongodb": "^6.7.0",
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.9.14"
+  }
+}

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex" />
+  <title>Admin — VSPARK 2025</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ── Header ───────────────────────────────────────────── -->
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <a class="brand" href="/"><b>V</b>SPARK <span class="badge badge--blue">Admin</span></a>
+      <button class="link-btn" id="logoutBtn" hidden>Log out</button>
+    </div>
+  </header>
+
+  <!-- ── Login ────────────────────────────────────────────── -->
+  <main class="wrap login-wrap" id="loginView">
+    <form class="card" id="loginForm" novalidate>
+      <h1 style="font-size:1.5rem; margin:0 0 6px;">Admin Login</h1>
+      <p class="muted">Sign in to manage registrations and the competition.</p>
+      <div class="field" style="margin-top:16px;"><label for="username">Username</label><input id="username" autocomplete="username" required /></div>
+      <div class="field"><label for="password">Password</label><input id="password" type="password" autocomplete="current-password" required /></div>
+      <p class="form-error" id="loginError" role="alert" hidden></p>
+      <button class="btn btn--full" type="submit" id="loginSubmit" style="margin-top:4px;">Log In</button>
+    </form>
+  </main>
+
+  <!-- ── Dashboard ─────────────────────────────────────────── -->
+  <main class="wrap dash" id="dashView" hidden>
+
+    <!-- Stats row -->
+    <section class="stats" id="stats"></section>
+
+    <!-- Tabs -->
+    <nav class="tabs" role="tablist">
+      <button class="tab-btn active" role="tab" aria-selected="true"  data-tab="tab-regs"     id="tab-regs-btn">Registrations</button>
+      <button class="tab-btn"        role="tab" aria-selected="false" data-tab="tab-settings"  id="tab-settings-btn">Settings</button>
+      <button class="tab-btn"        role="tab" aria-selected="false" data-tab="tab-live"      id="tab-live-btn">Live 🔴</button>
+      <button class="tab-btn"        role="tab" aria-selected="false" data-tab="tab-results"   id="tab-results-btn">Results</button>
+    </nav>
+
+    <!-- ── Registrations tab ─────────────────────────────── -->
+    <section class="tab-panel active" id="tab-regs">
+      <div class="toolbar">
+        <input id="search" type="search" placeholder="Search name, reg no, team, email…" aria-label="Search" />
+        <select id="statusFilter" aria-label="Filter by status">
+          <option value="">All statuses</option>
+          <option value="pending">Pending</option>
+          <option value="accepted">Accepted</option>
+          <option value="rejected">Rejected</option>
+        </select>
+        <button class="btn btn--sm" id="exportBtn">Export CSV</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr>
+            <th>ID</th><th>Team / Members</th><th>Contact</th><th>Payment</th>
+            <th>Status</th><th>Venue</th><th>Registered</th><th></th>
+          </tr></thead>
+          <tbody id="regsRows"></tbody>
+        </table>
+        <p class="empty" id="regsEmpty" hidden>No registrations match.</p>
+      </div>
+    </section>
+
+    <!-- ── Settings tab ───────────────────────────────────── -->
+    <section class="tab-panel" id="tab-settings">
+      <div class="card" style="max-width:640px;">
+        <h2>Competition Settings</h2>
+        <form id="settingsForm" novalidate>
+          <div class="field">
+            <label for="settingsDriveLink">Scenario Drive link <span class="muted" style="font-weight:400">(shared with participants when timer starts)</span></label>
+            <input id="settingsDriveLink" type="url" placeholder="https://drive.google.com/…" />
+            <small class="error" id="settingsDriveLinkErr"></small>
+          </div>
+          <div class="row">
+            <div class="field">
+              <label for="settingsDuration">Duration per team (minutes)</label>
+              <input id="settingsDuration" type="number" min="1" max="240" value="20" />
+            </div>
+            <div class="field">
+              <label for="settingsVenue">Default venue</label>
+              <input id="settingsVenue" type="text" placeholder="e.g. CS Lab 2, Block B" />
+            </div>
+          </div>
+          <p class="form-error" id="settingsError" role="alert" hidden></p>
+          <button class="btn btn--sm" type="submit">Save Settings</button>
+          <span id="settingsSaved" style="margin-left:12px; color:var(--ok); font-size:.88rem;" hidden>✓ Saved</span>
+        </form>
+
+        <hr style="border:0; border-top:1px solid var(--line); margin:24px 0;" />
+
+        <h3 style="margin:0 0 8px;">Competition Gate</h3>
+        <p class="muted" style="font-size:.88rem;">When the gate is <strong>Open</strong>, accepted teams can click "Start" in their portal. When <strong>Closed</strong>, new starts are blocked (teams already running are unaffected).</p>
+        <div style="display:flex; align-items:center; gap:16px; margin-top:14px;">
+          <div id="gateStatus" class="badge badge--warn">Closed</div>
+          <button class="btn btn--sm" id="toggleGateBtn">Open Gate</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Live tab ───────────────────────────────────────── -->
+    <section class="tab-panel" id="tab-live">
+      <div class="toolbar">
+        <input id="liveSearch" type="search" placeholder="Search team or reg no…" aria-label="Search live" />
+        <select id="liveStateFilter" aria-label="Filter by state">
+          <option value="">All states</option>
+          <option value="not_started">Not started</option>
+          <option value="running">Running</option>
+          <option value="time_over">Time over</option>
+          <option value="submitted">Submitted</option>
+        </select>
+        <button class="btn btn--sm btn--ghost" id="liveRefreshBtn">↻ Refresh</button>
+        <button class="btn btn--sm" id="liveExportBtn">Export CSV</button>
+        <span class="muted" style="font-size:.8rem;" id="liveLastUpdated"></span>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr>
+            <th>Team</th><th>Members</th><th>Venue</th><th>State</th>
+            <th>Started</th><th>Ends At</th><th>Submission</th><th>Sub. time</th><th></th>
+          </tr></thead>
+          <tbody id="liveRows"></tbody>
+        </table>
+        <p class="empty" id="liveEmpty" hidden>No accepted teams yet.</p>
+      </div>
+    </section>
+
+    <!-- ── Results tab ────────────────────────────────────── -->
+    <section class="tab-panel" id="tab-results">
+      <!-- Podium summary -->
+      <div class="admin-podium" id="adminPodium">
+        <div class="podium-card first">
+          <span class="podium-medal">🥇</span>
+          <div class="podium-pos">1st Place</div>
+          <div id="podiumFirst" class="podium-team podium-empty">Not decided</div>
+        </div>
+        <div class="podium-card second">
+          <span class="podium-medal">🥈</span>
+          <div class="podium-pos">2nd Place</div>
+          <div id="podiumSecond" class="podium-team podium-empty">Not decided</div>
+        </div>
+        <div class="podium-card third">
+          <span class="podium-medal">🥉</span>
+          <div class="podium-pos">3rd Place</div>
+          <div id="podiumThird" class="podium-team podium-empty">Not decided</div>
+        </div>
+      </div>
+
+      <!-- Review progress + publish -->
+      <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap; margin-bottom:20px;">
+        <div>
+          <div style="font-size:.82rem; color:var(--muted); margin-bottom:4px;">Review progress</div>
+          <div class="progress-bar" style="width:200px;"><div class="progress-bar-fill" id="reviewProgress" style="width:0%"></div></div>
+          <div style="font-size:.78rem; color:var(--muted); margin-top:2px;" id="reviewProgressLabel">0 of 0 reviewed</div>
+        </div>
+        <div style="display:flex; gap:8px; align-items:center;">
+          <button class="btn btn--sm" id="publishBtn">Publish Results</button>
+          <button class="btn btn--sm btn--danger" id="unpublishBtn" hidden>Unpublish</button>
+          <button class="btn btn--sm btn--ghost" id="resultsExportBtn">Export CSV</button>
+          <span id="publishedBadge" class="badge badge--ok" hidden>Published</span>
+        </div>
+      </div>
+
+      <!-- Submissions table -->
+      <h3 style="margin:0 0 12px;">With Submission</h3>
+      <div class="toolbar">
+        <input id="resultsSearch" type="search" placeholder="Search team…" aria-label="Search results" />
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr>
+            <th>Team</th><th>Members</th><th>Venue</th><th>Link</th>
+            <th>Submitted at</th><th>Min after start</th><th>Position</th><th>Reviewed</th><th>Notes</th>
+          </tr></thead>
+          <tbody id="resultsRows"></tbody>
+        </table>
+        <p class="empty" id="resultsEmpty" hidden>No submissions yet.</p>
+      </div>
+
+      <h3 style="margin:28px 0 12px;">Without Submission</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Team</th><th>Members</th><th>Venue</th><th>Started</th></tr></thead>
+          <tbody id="noSubRows"></tbody>
+        </table>
+        <p class="empty" id="noSubEmpty" hidden>All accepted teams have submitted.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── Modals ─────────────────────────────────────────────── -->
+
+  <!-- Reject modal -->
+  <div class="modal-backdrop" id="rejectModal" hidden role="dialog" aria-modal="true" aria-labelledby="rejectModalTitle">
+    <div class="modal">
+      <h3 id="rejectModalTitle">Reject Registration</h3>
+      <p class="muted" style="font-size:.88rem;">Optionally provide a reason. The student will see this message.</p>
+      <div class="field"><label for="rejectReason">Reason (optional)</label><textarea id="rejectReason" rows="3" placeholder="e.g. Payment receipt unclear, please re-upload."></textarea></div>
+      <div class="modal-actions">
+        <button class="btn btn--ghost btn--sm" id="rejectCancelBtn">Cancel</button>
+        <button class="btn btn--sm btn--danger" id="rejectConfirmBtn">Reject</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Receipt viewer modal -->
+  <div class="modal-backdrop" id="receiptModal" hidden role="dialog" aria-modal="true" aria-labelledby="receiptModalTitle">
+    <div class="modal" style="max-width:680px;">
+      <h3 id="receiptModalTitle">Payment Receipt</h3>
+      <div id="receiptContent" style="margin-top:12px; text-align:center;">Loading…</div>
+      <div class="modal-actions">
+        <button class="btn btn--ghost btn--sm" id="receiptCloseBtn">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Venue override modal -->
+  <div class="modal-backdrop" id="venueModal" hidden role="dialog" aria-modal="true" aria-labelledby="venueModalTitle">
+    <div class="modal">
+      <h3 id="venueModalTitle">Set Venue Override</h3>
+      <p class="muted" style="font-size:.88rem;">Leave blank to use the default venue from Settings.</p>
+      <div class="field"><label for="venueInput">Venue</label><input id="venueInput" type="text" placeholder="e.g. CS Lab 3, Block A" /></div>
+      <div class="modal-actions">
+        <button class="btn btn--ghost btn--sm" id="venueCancelBtn">Cancel</button>
+        <button class="btn btn--sm" id="venueConfirmBtn">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Extend time modal -->
+  <div class="modal-backdrop" id="extendModal" hidden role="dialog" aria-modal="true" aria-labelledby="extendModalTitle">
+    <div class="modal">
+      <h3 id="extendModalTitle">Add Minutes</h3>
+      <div class="field"><label for="extendMinutes">Extra minutes to add</label><input id="extendMinutes" type="number" min="1" max="60" value="5" /></div>
+      <div class="modal-actions">
+        <button class="btn btn--ghost btn--sm" id="extendCancelBtn">Cancel</button>
+        <button class="btn btn--sm" id="extendConfirmBtn">Add Time</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="wrap">VSPARK 2025 &nbsp;·&nbsp; Admin Panel</div>
+  </footer>
+
+  <script src="admin.js"></script>
+</body>
+</html>
